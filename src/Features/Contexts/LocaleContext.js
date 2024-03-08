@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-const LocaleContext = createContext();
+const LocaleContext = createContext(null);
 
 export const LocaleProvider = LocaleContext.Provider
 

@@ -1,9 +1,9 @@
-import { Avatar, Box, Button, Card, CardBody, CardFooter, CardHeader, Container, Flex, Grid, HStack, Heading, Link as LinkChakra, Text, VStack } from "@chakra-ui/react"
+import { Avatar, Box, Button, Card, CardBody, Container, Flex, Grid, HStack, Heading, Link as LinkChakra, Text, VStack } from "@chakra-ui/react"
 import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react"
 import { threads } from "../../utils/data"
 import { Link as LinkRouter } from "react-router-dom"
 
-const Blog = () => {
+const Tweet = () => {
     return (
         <Container maxW={{
             base: 'full',
@@ -11,7 +11,6 @@ const Blog = () => {
             md: "container.md",
             lg: "container.lg",
         }}
-            marginTop="60px"
         >
             <Flex
                 flexDirection={{
@@ -40,33 +39,40 @@ const Blog = () => {
                 <VStack spacing={8} >
                     {threads.map(thread => (
                         <Card key={thread.id}
-                            paddingInlineEnd={{
-                                lg: '40px'
-                            }}
+                            maxW={'md'}
                         >
-                            <CardHeader>
-                                <HStack>
-                                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                            <Box padding={{
+                                base: 4,
+                                md: 5,
+                            }}>
+                                <Flex gap='4' justifyContent="space-between">
+                                    <HStack spacing={4}>
                                         <Avatar name='Fatir Al Fatih' src='https://bit.ly/sage-adebayo' />
                                         <Box>
                                             <Heading size='sm'>Fatir Al Fatih</Heading>
                                             <Text>@fatirAlfatih</Text>
                                         </Box>
-                                    </Flex>
-                                </HStack>
-                            </CardHeader>
-                            <CardBody>
-                                <HStack flexWrap="wrap" gap={4}>
+                                    </HStack>
+                                    <Text paddingStart="20" fontSize={{
+                                        base: '9px',
+                                        sm: '12',
+                                        md: 'sm'
+                                    }} display="flex">23 menit yang lalu</Text>
+                                </Flex>
+                                <HStack flexWrap="wrap" marginTop={3} gap={4}>
                                     <LinkChakra>#{thread.category}</LinkChakra>
                                 </HStack>
-                                <Flex flexDirection={'column'} gap={2}>
-                                    <Heading
-                                        fontSize={'24px'}
-                                        marginTop={3}
-                                    >
-                                        {thread.title}
-                                    </Heading>
-                                    <Text>{thread.body}</Text>
+                                <Flex flexDirection={'column'}>
+                                    <LinkRouter to={`/detail/${thread.id}`}>
+                                        <Button
+                                            variant='link'
+                                            fontSize={'24px'}
+                                            marginTop={3}
+                                        >
+                                            {thread.title}
+                                        </Button>
+                                    </LinkRouter>
+                                    <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea eum doloremque harum ab! Quisquam officiis mollitia, rem expedita qui deleniti architecto!</Text>
                                 </Flex>
                                 <HStack marginTop={2} gap={4}>
                                     <Button
@@ -91,19 +97,10 @@ const Blog = () => {
                                         size='sm'
                                         leftIcon={<MessageCircle size={20} />}
                                     >
-                                        Comment
+                                        2
                                     </Button>
                                 </HStack>
-                            </CardBody>
-                            <CardFooter gap={4}>
-                                <LinkRouter to>
-                                    <Button
-                                        colorScheme="purple"
-                                    >
-                                        Read More
-                                    </Button>
-                                </LinkRouter>
-                            </CardFooter>
+                            </Box>
                         </Card>
                     ))}
                 </VStack>
@@ -122,11 +119,11 @@ const Blog = () => {
                         }}
                     >
                         <CardBody>
-                            <Flex flexDirection='column' alignItems={'start'} gap={3}>
+                            <VStack alignItems={'start'} gap={3}>
                                 <Heading size={{
                                     md: 'md',
-                                }}>Kategori Popular</Heading>
-                                <VStack>
+                                }}>All Topics</Heading>
+                                <HStack maxW="250px" flexWrap="wrap" gap="2">
                                     <Button
                                         variant={'ghost'}
                                     >
@@ -137,14 +134,29 @@ const Blog = () => {
                                     >
                                         #tailwind
                                     </Button>
-                                </VStack>
-                            </Flex>
+                                    <Button
+                                        variant={'ghost'}
+                                    >
+                                        #tailwind
+                                    </Button>
+                                    <Button
+                                        variant={'ghost'}
+                                    >
+                                        #tailwind
+                                    </Button>
+                                    <Button
+                                        variant={'ghost'}
+                                    >
+                                        #tailwind
+                                    </Button>
+                                </HStack>
+                            </VStack>
                         </CardBody>
                     </Card>
                 </Box>
             </Flex>
-        </Container>
+        </Container >
     )
 }
 
-export default Blog
+export default Tweet

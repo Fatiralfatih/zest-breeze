@@ -11,7 +11,7 @@ const Register = () => {
     const textColor = useColorModeValue('black', 'white')
 
     const { locale } = useContext(LocaleContext)
-
+    
     return (
         <>
             <Navbar />

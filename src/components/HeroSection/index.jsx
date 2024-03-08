@@ -1,15 +1,21 @@
-import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react"
+import { Box, Button, Container, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, VStack, useDisclosure } from "@chakra-ui/react"
+import { useRef } from "react"
 
 const HeroSection = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const initialRef = useRef(null)
+    const finalRef = useRef(null)
+
     return (
-        <Box marginTop="130px">
+        <Box paddingTop="100px" marginBottom="10">
             <Container maxW={{
                 base: 'full',
                 sm: 'md',
                 md: "container.md",
                 lg: "container.lg",
             }}>
-                <VStack textAlign="center">
+                <VStack textAlign="center" gap="4">
                     <Heading
                         color="purple"
                         fontWeight="normal"
@@ -20,7 +26,7 @@ const HeroSection = () => {
                             lg: '35px'
                         }}
                     >
-                        the blog breeze
+                        the tweet breeze
                     </Heading>
                     <Heading
                         fontSize={{
@@ -32,16 +38,40 @@ const HeroSection = () => {
                     >
                         Start Collecting Imaginations
                     </Heading>
-                    <Text
-                        fontSize={ {
-                            base: 'normal',
-                            md: '15px',
-                            lg: '17px'
-                        }}
+                    <Button
+                        colorScheme="gray"
+                        onClick={onOpen}
                     >
-                        Guides, product updates, case studies and research from the Senja cofounders.
-                    </Text>
+                        Create your imaginations
+                    </Button>
                 </VStack>
+
+                <Modal
+                    initialFocusRef={initialRef}
+                    finalFocusRef={finalRef}
+                    isOpen={isOpen}
+                    onClose={onClose}
+                >
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>What is your imagination?</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                            <FormControl display="flex" flexDirection='column' gap="3">
+                                <Input ref={initialRef} placeholder='Masukkan tittle...' />
+                                <Textarea placeholder="Say everything..."></Textarea>
+                                <Input type="text" placeholder="#Category" maxW="40" />
+                            </FormControl>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3}>
+                                Post
+                            </Button>
+                            <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
             </Container>
         </Box>
     )

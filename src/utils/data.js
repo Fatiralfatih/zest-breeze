@@ -11,7 +11,7 @@ export const threads = [
         "totalComments": 0
     },
     {
-        "id": "thread-1",
+        "id": "thread-2",
         "title": "Thread kedua",
         "body": "Ini adalah thread kedua",
         "category": "General",
@@ -22,7 +22,7 @@ export const threads = [
         "totalComments": 0
     },
     {
-        "id": "thread-1",
+        "id": "thread-3",
         "title": "Thread ketiga",
         "body": "Ini adalah thread ketiga",
         "category": "General",

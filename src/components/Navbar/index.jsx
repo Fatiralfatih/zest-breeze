@@ -1,5 +1,5 @@
 import { Box, Button, Container, Flex, HStack, Heading, Text, useColorMode, useColorModeValue } from "@chakra-ui/react"
-import { AlignEndHorizontal, LogIn, Menu, MessagesSquare, Moon, Rocket, Sun, XCircle } from "lucide-react"
+import { AlignEndHorizontal, Fan, Languages, LogIn, Menu, MessagesSquare, Moon, Sun, XCircle } from "lucide-react"
 import { useContext, useState } from "react"
 import { Link } from "react-router-dom";
 import LocaleContext from "../../Features/Contexts/LocaleContext";
@@ -7,7 +7,7 @@ import LocaleContext from "../../Features/Contexts/LocaleContext";
 const Navbar = () => {
     const [activeMenuMobile, setActiveMenuMobile] = useState(false);
     const { colorMode, toggleColorMode } = useColorMode()
-    const bg = useColorModeValue('white', 'black')
+    const bg = useColorModeValue('whiteSmoke', 'black')
 
     const toggleButtonThemeMode = colorMode === 'light' ? (<Moon size={30} />) : (<Sun size={30} />)
     const toggleMenuMobile = !activeMenuMobile ? (<Menu size="35" />) : (<XCircle size="35" />)
@@ -23,9 +23,9 @@ const Navbar = () => {
             }} >
                 <Flex justifyContent="space-between" paddingBlock="5" alignItems="center" paddingInline="3">
                     <Box display="flex" alignItems="center" gap="3">
-                        <Rocket size="35" color="blue" />
+                        <Fan size="35" color="blue" />
                         <Link to='/'>
-                            <Heading fontSize={["25", "25", "35"]}>Breeze</Heading>
+                            <Heading fontSize={["25", "25", "30"]}>Zest Breeze</Heading>
                         </Link>
                     </Box>
                     <HStack gap="10" display={{
@@ -33,13 +33,13 @@ const Navbar = () => {
                         md: 'flex'
                     }}>
                         <HStack gap="5">
-                            <Link>
+                            <Link to="/">
                                 <Text
                                     fontSize={{
                                         md: '17'
                                     }}
                                     color="gray"
-                                >Threads</Text>
+                                >Tweet</Text>
                             </Link>
                             <Link>
                                 <Text
@@ -53,7 +53,13 @@ const Navbar = () => {
                             <Button variant="ghost" onClick={toggleColorMode}>
                                 {toggleButtonThemeMode}
                             </Button>
-                            <Button onClick={toggleLocale}>{locale === 'id' ? 'en' : 'id'}</Button>
+                            <Button
+                                onClick={toggleLocale}
+                                leftIcon={<Languages />}
+                                variant={'ghost'}
+                            >
+                                {locale === 'id' ? 'en' : 'id'}
+                            </Button>
                         </HStack>
                         <Link to='/login'>
                             <Button
@@ -89,7 +95,7 @@ const Navbar = () => {
                 {activeMenuMobile && (
                     <Box position="fixed" bottom="0" left="0" right="0" borderTop="1px" borderColor="gray.400" display={["block", "", "none"]} bgColor={bg}>
                         <HStack justifyContent="space-evenly" alignItems="center" marginTop="3" marginBottom="2">
-                            <Box>
+                            <Link to={'/'}>
                                 <Button
                                     display="flex"
                                     flexDirection="column"
@@ -105,9 +111,9 @@ const Navbar = () => {
                                     border="none"
                                 >
                                     <MessagesSquare size="25" />
-                                    Threads
+                                    Tweet
                                 </Button>
-                            </Box>
+                            </Link>
                             <Box>
                                 <Button
                                     display="flex"
@@ -128,7 +134,7 @@ const Navbar = () => {
                                     LeaderBoard
                                 </Button>
                             </Box>
-                            <Box>
+                            <Link to={'/login'}>
                                 <Button
                                     display="flex"
                                     flexDirection="column"
@@ -145,7 +151,7 @@ const Navbar = () => {
                                     <LogIn size="25" />
                                     Login
                                 </Button>
-                            </Box>
+                            </Link>
                         </HStack>
                     </Box>
                 )}

@@ -1,25 +1,29 @@
-import { Box, Button, Flex, Heading, Input, InputGroup, InputRightElement, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react"
-import { Eye, EyeOff, Rocket } from "lucide-react"
-import { useContext, useState } from "react"
+import LocaleContext from "@Features/Contexts/LocaleContext"
+import { Box, Button, Flex, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react"
+import { login } from "@utils/api"
+import { Rocket } from "lucide-react"
+import { useContext } from "react"
 import { Link } from "react-router-dom"
-import LocaleContext from "../../Features/Contexts/LocaleContext"
-import Navbar from "../../components/Navbar"
+import LoginInput from "./LoginInput"
+import { func } from "prop-types"
 
-const Login = () => {
-    const [showPassword, setShowPassword] = useState(false)
-    const textColor = useColorModeValue('black', 'white')
+const Login = ({ loginSuccess }) => {
 
     const { locale } = useContext(LocaleContext);
+    const textColor = useColorModeValue('black', 'white')
+
+    const onLogin = async ({ email, password }) => {
+        const { data } = await login({ email, password });
+        loginSuccess(data);
+    }
 
     return (
         <>
-            <Navbar />
             <Box
                 display={'flex'}
                 minH={'100vh'}
                 justifyContent={'center'}
             >
-
                 <Flex marginTop={200} flexDirection={'column'} alignItems={'center'}>
                     <VStack gap={5}>
                         <Heading
@@ -56,56 +60,15 @@ const Login = () => {
                             </Link>
                         </Text>
                     </VStack>
-                    <form>
-                        <Stack marginTop={5} spacing={4}>
-                            <Input
-                                size="lg"
-                                width={{
-                                    base: 'initial',
-                                    md: '350px'
-                                }}
-                                placeholder={locale === 'id' ? 'Masukkan email...' : 'Enter your email...'}
-                                variant={'filled'}
-                                focusBorderColor="black"
-                                _hover={'black'}
-                                required
-                            />
-
-                            <InputGroup size={'lg'}>
-                                <Input
-                                    pr='4.5rem'
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder={locale === 'id' ? 'Masukkan password...' : 'Enter your password...'}
-                                    variant={'filled'}
-                                    focusBorderColor="black"
-                                    _hover={'black'}
-                                    autoComplete="current-password"
-                                    required
-                                />
-                                <InputRightElement width='4.5rem'>
-                                    <Button
-                                        h='1.75rem'
-                                        size='sm'
-                                        variant={'ghost'}
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    >
-                                        {showPassword ? (<EyeOff />) : (<Eye />)}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-
-                            <Button
-                                colorScheme="purple"
-                                type="submit"
-                            >
-                                {locale === 'id' ? 'Masuk' : 'Sign In'}
-                            </Button>
-                        </Stack>
-                    </form>
+                    <LoginInput login={onLogin} />
                 </Flex>
             </Box>
         </>
     )
+}
+
+Login.propTypes = {
+    loginSuccess: func,
 }
 
 export default Login

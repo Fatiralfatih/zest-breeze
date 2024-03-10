@@ -1,4 +1,4 @@
-export const threads = [
+export const tweets = [
     {
         "id": "thread-1",
         "title": "Thread Pertama",

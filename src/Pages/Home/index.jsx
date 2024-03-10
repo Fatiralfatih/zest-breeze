@@ -1,13 +1,18 @@
-import HeroSection from "../../components/HeroSection"
-import Navbar from "../../components/Navbar"
-import Tweet from "../../components/Tweet"
+import { Box } from "@chakra-ui/react"
+import Navbar from "../../components/template/Navbar"
+import HeroSection from "../../components/template/HeroSection"
+import Tweets from "../../components/template/Tweets"
+import Footer from "../../components/template/Footer"
 
 const Home = () => {
     return (
         <>
             <Navbar />
-            <HeroSection />
-            <Tweet />
+            <Box minH={'100vh'}>
+                <HeroSection />
+                <Tweets />
+            </Box>
+            <Footer />
         </>
     )
 }

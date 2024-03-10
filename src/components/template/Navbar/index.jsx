@@ -1,16 +1,18 @@
-import { Box, Button, Container, Flex, HStack, Heading, Text, useColorMode, useColorModeValue } from "@chakra-ui/react"
+import { Box, Button, Container, Flex, HStack, Heading, Text, useBoolean, useColorMode, useColorModeValue } from "@chakra-ui/react"
 import { AlignEndHorizontal, Fan, Languages, LogIn, Menu, MessagesSquare, Moon, Sun, XCircle } from "lucide-react"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { Link } from "react-router-dom";
-import LocaleContext from "../../Features/Contexts/LocaleContext";
+import LocaleContext from "../../../Features/Contexts/LocaleContext";
 
 const Navbar = () => {
-    const [activeMenuMobile, setActiveMenuMobile] = useState(false);
+    const [activeMenuMobile, setActiveMenuMobile] = useBoolean();
+
     const { colorMode, toggleColorMode } = useColorMode()
+
     const bg = useColorModeValue('whiteSmoke', 'black')
 
     const toggleButtonThemeMode = colorMode === 'light' ? (<Moon size={30} />) : (<Sun size={30} />)
-    const toggleMenuMobile = !activeMenuMobile ? (<Menu size="35" />) : (<XCircle size="35" />)
+    const toggleMenuMobile = activeMenuMobile ? (<Menu size="35" />) : (<XCircle size="35" />)
 
     const { locale, toggleLocale } = useContext(LocaleContext)
 
@@ -61,7 +63,7 @@ const Navbar = () => {
                                 {locale === 'id' ? 'en' : 'id'}
                             </Button>
                         </HStack>
-                        <Link to='/login'>
+                        <Link to='/*'>
                             <Button
                                 colorScheme="purple"
                                 variant="solid"
@@ -83,7 +85,7 @@ const Navbar = () => {
                             padding="3"
                             variant="outline"
                             border="none"
-                            onClick={() => setActiveMenuMobile(!activeMenuMobile)}
+                            onClick={setActiveMenuMobile.toggle}
                         >
                             {toggleMenuMobile}
                         </Button>
@@ -92,7 +94,7 @@ const Navbar = () => {
                 </Flex>
 
                 {/**Menu mobile */}
-                {activeMenuMobile && (
+                {activeMenuMobile ? (
                     <Box position="fixed" bottom="0" left="0" right="0" borderTop="1px" borderColor="gray.400" display={["block", "", "none"]} bgColor={bg}>
                         <HStack justifyContent="space-evenly" alignItems="center" marginTop="3" marginBottom="2">
                             <Link to={'/'}>
@@ -134,7 +136,7 @@ const Navbar = () => {
                                     LeaderBoard
                                 </Button>
                             </Box>
-                            <Link to={'/login'}>
+                            <Link to={'/*'}>
                                 <Button
                                     display="flex"
                                     flexDirection="column"
@@ -154,7 +156,7 @@ const Navbar = () => {
                             </Link>
                         </HStack>
                     </Box>
-                )}
+                ) : ''}
                 {/**end Menu mobile */}
 
             </Container>

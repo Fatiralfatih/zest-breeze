@@ -1,9 +1,9 @@
 import { Box, Button, Flex, Heading, Input, InputGroup, InputRightElement, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react"
 import { Eye, EyeOff, Rocket } from "lucide-react"
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import LocaleContext from "../../Features/Contexts/LocaleContext"
-import Navbar from "../../components/Navbar"
+import Navbar from "../../components/template/Navbar"
 
 const Register = () => {
 
@@ -11,7 +11,45 @@ const Register = () => {
     const textColor = useColorModeValue('black', 'white')
 
     const { locale } = useContext(LocaleContext)
-    
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    const fetchRegisteredUser = async ({ email, name, password }) => {
+        const response = await fetch('https://forum-api.dicoding.dev/v1/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, email, password })
+        })
+        const responseJson = await response.json();
+        if (responseJson.status !== 'success') {
+            alert(responseJson.message)
+            return { error: true }
+        }
+
+        return { error: false };
+    }
+
+    const handleFormChange = async (event) => {
+        event.preventDefault();
+        const { error } = await fetchRegisteredUser({
+            name,
+            email,
+            password,
+        });
+
+        if (!error) {
+            navigate('/*')
+        }
+    }
+
+
+
     return (
         <>
             <Navbar />
@@ -56,7 +94,7 @@ const Register = () => {
                             </Link>
                         </Text>
                     </VStack>
-                    <form>
+                    <form onSubmit={handleFormChange}>
                         <Stack marginTop={5} spacing={4}>
                             <Input
                                 type="text"
@@ -70,6 +108,7 @@ const Register = () => {
                                 focusBorderColor="black"
                                 _hover={'black'}
                                 required
+                                onChange={(e) => setName(e.target.value)}
                             />
                             <Input
                                 size="lg"
@@ -83,6 +122,7 @@ const Register = () => {
                                 focusBorderColor="black"
                                 _hover={'black'}
                                 required
+                                onChange={(e) => setEmail(e.target.value)}
                             />
 
                             <InputGroup size={'lg'}>
@@ -94,6 +134,7 @@ const Register = () => {
                                     focusBorderColor="black"
                                     _hover={'black'}
                                     required
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <InputRightElement width='4.5rem'>
                                     <Button

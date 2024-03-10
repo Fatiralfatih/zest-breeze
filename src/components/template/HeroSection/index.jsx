@@ -1,9 +1,15 @@
-import { Box, Button, Container, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, VStack, useDisclosure } from "@chakra-ui/react"
-import { useRef } from "react"
+import { Box, Button, Container, FormControl, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, VStack, useColorModeValue, useDisclosure } from "@chakra-ui/react"
+import { useContext, useRef } from "react"
+import LocaleContext from "../../../Features/Contexts/LocaleContext";
 
 const HeroSection = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    // const [title, setTitle] = useState('')
+    // const [body, setBody] = useState('')
+    // const [kategori, setKategori] = useState('');
 
+    const { locale } = useContext(LocaleContext);
+    const btnColor = useColorModeValue('purple', 'gray');
     const initialRef = useRef(null)
     const finalRef = useRef(null)
 
@@ -36,13 +42,13 @@ const HeroSection = () => {
                         }}
                         fontWeight="800"
                     >
-                        Start Collecting Imaginations
+                        {locale === 'id' ? 'Mulailah Mengumpulkan Imajinasi' : 'Start Collecting Imaginations'}
                     </Heading>
                     <Button
-                        colorScheme="gray"
+                        colorScheme={btnColor}
                         onClick={onOpen}
                     >
-                        Create your imaginations
+                        {locale === 'id' ? 'Buat imaginasimu sekarang !!' : 'Create your imaginations now !!'}
                     </Button>
                 </VStack>
 
@@ -54,13 +60,13 @@ const HeroSection = () => {
                 >
                     <ModalOverlay />
                     <ModalContent>
-                        <ModalHeader>What is your imagination?</ModalHeader>
+                        <ModalHeader>{locale === 'id' ? 'Apa imajinasimu?' : 'What is your imagination?'}</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody pb={6}>
                             <FormControl display="flex" flexDirection='column' gap="3">
-                                <Input ref={initialRef} placeholder='Masukkan tittle...' />
-                                <Textarea placeholder="Say everything..."></Textarea>
-                                <Input type="text" placeholder="#Category" maxW="40" />
+                                <Input ref={initialRef} placeholder={locale == 'id' ? 'Masukkan title...' : 'Input title...'} />
+                                <Textarea placeholder={locale == 'id' ? 'Katakan apapun...' : 'Say everything...'}></Textarea>
+                                <Input type="text" placeholder={locale === 'id' ? '#Kategori' : "#Category"} maxW="40" />
                             </FormControl>
                         </ModalBody>
 

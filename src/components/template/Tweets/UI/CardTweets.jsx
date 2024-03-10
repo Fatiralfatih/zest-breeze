@@ -1,17 +1,19 @@
 import { Avatar, Box, Card, Flex, HStack, Heading, Text, Link as LinkChakra, Button } from "@chakra-ui/react"
+import { getDateHumans, removeElementHtml } from "@utils/index";
 import { MessageCircle, ThumbsDown, ThumbsUp } from "lucide-react";
 import { array, number, string } from "prop-types";
-import { Link as LinkRouter } from 'react-router-dom';
-import { getDateHumans, removeElementHtml } from "../../../../utils";
+import { Link, Link as LinkRouter } from 'react-router-dom';
 
-const CardTweets = ({ id, createdAt, category, title, body, upVotesBy, downVotesBy, totalComments }) => {
+const CardTweets = ({ id, createdAt, category, title, body, upVotesBy, users, ownerId, downVotesBy, totalComments }) => {
+
+    const getUserById = users.find(user => user.id === ownerId);
 
     return (
         <Card
             w={{
                 base: '340px',
                 md: '500px',
-                lg: '800px',
+                lg: '640px',
             }}
         >
             <Box padding={{
@@ -24,13 +26,13 @@ const CardTweets = ({ id, createdAt, category, title, body, upVotesBy, downVotes
                         overflow: "hidden",
                         whiteSpace: 'nowrap'
                     }} >
-                        <Avatar name='Fatir Al Fatih' src='https://bit.ly/sage-adebayo' />
+                        <Avatar name='Fatir Al Fatih' src={getUserById?.avatar} />
                         <Box>
                             <Heading
-                                size='sm'
+                                size='md'
                             >
-                                @fatirAlfatih</Heading>
-                            <Text>@fatirAlfatih</Text>
+                                {getUserById?.name}</Heading>
+                            <Text>@{getUserById?.email}</Text>
                         </Box>
                     </HStack>
                     <Text paddingStart="20" fontSize={{
@@ -83,14 +85,16 @@ const CardTweets = ({ id, createdAt, category, title, body, upVotesBy, downVotes
                     >
                         {downVotesBy.length}
                     </Button>
-                    <Button
-                        colorScheme="gray"
-                        variant='ghost'
-                        size='sm'
-                        leftIcon={<MessageCircle size={20} />}
-                    >
-                        {totalComments}
-                    </Button>
+                    <Link to={`detail/${id}`}>
+                        <Button
+                            colorScheme="gray"
+                            variant='ghost'
+                            size='sm'
+                            leftIcon={<MessageCircle size={20} />}
+                        >
+                            {totalComments}
+                        </Button>
+                    </Link>
                 </HStack>
             </Box>
         </Card>
@@ -106,6 +110,8 @@ CardTweets.propTypes = {
     upVotesBy: array,
     downVotesBy: array,
     totalComments: number,
+    users: array,
+    ownerId: string,
 }
 
 

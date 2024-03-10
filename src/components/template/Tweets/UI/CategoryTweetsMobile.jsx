@@ -3,7 +3,6 @@ import { array, bool } from "prop-types"
 
 const CategoryTweetsMobile = ({ threads, isLoading }) => {
 
-
     return (
         <Box display={{
             base: 'block',

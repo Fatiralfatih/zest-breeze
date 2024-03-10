@@ -18,23 +18,7 @@ async function fetchWithToken(url, options = {}) {
     });
 }
 
-async function register({ name, email, password }) {
-    const response = await fetch(`${BASE_URL}/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
-    })
-    const responseJson = await response.json();
-
-    if (responseJson.status !== 'success') {
-        alert(responseJson.message);
-        return { error: true, data: null };
-    }
-
-    return { error: false, data: responseJson.data.user };
-}
-
-async function login({ email, password }) {
+async function fetchUserLogin({ email, password }) {
     const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {
@@ -51,6 +35,35 @@ async function login({ email, password }) {
     }
 
     return { error: false, data: responseJson.data.token };
+}
+
+const fetchUserRegistered = async ({ email, name, password }) => {
+
+    const response = await fetch(`${BASE_URL}/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password })
+    })
+    const responseJson = await response.json();
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true }
+    }
+
+    return { error: false };
+}
+
+const fetchAllUser = async () => {
+    const response = await fetch(`${BASE_URL}/users`);
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.users };
 }
 
 const getUserLogged = async () => {
@@ -84,12 +97,33 @@ const getThreadsById = async (id) => {
     return { error: false, data: responseJson.data.detailThread }
 }
 
+
+const fetchCreateThread = async ({ title, body, category }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ title, body, category })
+    })
+
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.thread }
+}
+
 export {
     getAccessToken,
     putAccessToken,
     getUserLogged,
     getAllThreads,
     getThreadsById,
-    login,
-    register,
+    fetchUserLogin,
+    fetchUserRegistered,
+    fetchAllUser,
+    fetchCreateThread
 }

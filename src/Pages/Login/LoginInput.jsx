@@ -3,24 +3,22 @@ import { Eye, EyeOff } from 'lucide-react';
 import { useContext, useState } from 'react'
 import { func } from 'prop-types';
 import LocaleContext from '@Features/Contexts/LocaleContext';
+import useLoginInput from '@Features/Hooks/useLoginInput';
 
 const LoginInput = ({ login }) => {
 
     const { locale } = useContext(LocaleContext);
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
     const [showPassword, setShowPassword] = useState(false)
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        login({
-            email,
-            password
+    const {
+        value,
+        handleEmailChange,
+        handlePasswordChange,
+        handleSubmit }
+        = useLoginInput({
+            onLogin: login
         })
-    }
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -37,8 +35,8 @@ const LoginInput = ({ login }) => {
                     _hover={'black'}
                     required
                     name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    value={value.email}
+                    onChange={handleEmailChange}
                 />
 
                 <InputGroup size={'lg'}>
@@ -52,8 +50,8 @@ const LoginInput = ({ login }) => {
                         autoComplete="current-password"
                         required
                         name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={value.password}
+                        onChange={handlePasswordChange}
                     />
                     <InputRightElement width='4.5rem'>
                         <Button

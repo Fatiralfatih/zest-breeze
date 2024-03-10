@@ -3,14 +3,14 @@ import { AlignEndHorizontal, Fan, Languages, LogIn, Menu, MessagesSquare, Moon, 
 import { useContext } from "react"
 import { Link } from "react-router-dom";
 import LocaleContext from "../../../Features/Contexts/LocaleContext";
+import { func, object } from "prop-types";
 
-const Navbar = () => {
+const Navbar = ({ authedUser, logout }) => {
     const [activeMenuMobile, setActiveMenuMobile] = useBoolean();
-
     const { colorMode, toggleColorMode } = useColorMode()
 
     const bg = useColorModeValue('whiteSmoke', 'black')
-
+    const textColor = useColorModeValue('black', 'whiteSmoke')
     const toggleButtonThemeMode = colorMode === 'light' ? (<Moon size={30} />) : (<Sun size={30} />)
     const toggleMenuMobile = activeMenuMobile ? (<Menu size="35" />) : (<XCircle size="35" />)
 
@@ -41,6 +41,7 @@ const Navbar = () => {
                                         md: '17'
                                     }}
                                     color="gray"
+                                    _hover={{ color: textColor }}
                                 >Tweet</Text>
                             </Link>
                             <Link>
@@ -49,7 +50,7 @@ const Navbar = () => {
                                         md: '17'
                                     }}
                                     color="gray"
-                                    _hover="teal"
+                                    _hover={{ color: textColor }}
                                 >LeaderBoard</Text>
                             </Link>
                             <Button variant="ghost" onClick={toggleColorMode}>
@@ -63,15 +64,19 @@ const Navbar = () => {
                                 {locale === 'id' ? 'en' : 'id'}
                             </Button>
                         </HStack>
-                        <Link to='/*'>
-                            <Button
-                                colorScheme="purple"
-                                variant="solid"
-                                leftIcon={<LogIn />}
-                            >
-                                Login
-                            </Button>
-                        </Link>
+                        {authedUser ? (
+                            <Button colorScheme={'green'} variant={'solid'} onClick={logout}>Logout</Button>
+                        ) : (
+                            <Link to='/*'>
+                                <Button
+                                    colorScheme="purple"
+                                    variant="solid"
+                                    leftIcon={<LogIn />}
+                                >
+                                    Login
+                                </Button>
+                            </Link>
+                        )}
                     </HStack>
 
                     {/**mobile */}
@@ -151,7 +156,6 @@ const Navbar = () => {
                                     border="none"
                                 >
                                     <LogIn size="25" />
-                                    Login
                                 </Button>
                             </Link>
                         </HStack>
@@ -162,6 +166,11 @@ const Navbar = () => {
             </Container>
         </Box>
     )
+}
+
+Navbar.propTypes = {
+    authedUser: object,
+    logout: func,
 }
 
 export default Navbar

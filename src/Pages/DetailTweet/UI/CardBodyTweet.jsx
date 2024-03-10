@@ -9,64 +9,64 @@ const CardBodyTweet = ({ owner, createdAt, category, title, body, upVotesBy, dow
     const btnColor = useColorModeValue('purple', 'gray');
 
     return (
-        <Box padding={{
-            base: 4,
-            md: 5,
-        }}>
-            {owner ? (
-                <Flex gap='4' justifyContent="space-between">
-                    <HStack spacing={4}>
-                        <Avatar name='Fatir Al Fatih' src={owner.avatar} />
-                        <Box>
-                            <Heading size='sm'>{owner.name}</Heading>
-                            <Text>@{owner.name}</Text>
-                        </Box>
-                    </HStack>
-                    <Text paddingStart="20" fontSize={{
-                        base: '9px',
-                        sm: '12',
-                        md: 'sm'
-                    }} display="flex">{getDateHumans(createdAt)}</Text>
+        <>
+            <Box padding={{
+                base: 4,
+                md: 5,
+            }}>
+                {owner && (
+                    <Flex gap='4' justifyContent="space-between">
+                        <HStack spacing={4}>
+                            <Avatar name='Fatir Al Fatih' src={owner.avatar} />
+                            <Box>
+                                <Heading size='sm'>{owner.name}</Heading>
+                                <Text fontSize={'sm'}>@{owner.name}</Text>
+                            </Box>
+                        </HStack>
+                        <Text paddingStart="20" fontSize={{
+                            base: '11px',
+                            md: 'sm'
+                        }} display="flex">{getDateHumans(createdAt)}</Text>
+                    </Flex>)}
+                <Flex flexDirection={'column'} gap={3} marginTop={2}>
+                    <Link>{`#${category || ''}`}</Link>
+                    <Heading fontSize={'2xl'}>
+                        {title}
+                    </Heading>
+                    <Text maxW={'md'}>{removeElementHtml(body)}</Text>
                 </Flex>
-            ) : (<p>Sedang loading</p>)}
-            <Flex flexDirection={'column'} gap={3} marginTop={2}>
-                <Link>{`#${category || 'loading'}`}</Link>
-                <Heading fontSize={'2xl'}>
-                    {title}
-                </Heading>
-                <Text>{removeElementHtml(body)}</Text>
-            </Flex>
-            <HStack marginTop={2} gap={4}>
-                <Button
-                    colorScheme="gray"
-                    variant='ghost'
-                    size='sm'
-                    leftIcon={<ThumbsUp size={20} />}
-                >
-                    {[upVotesBy].length}
-                </Button>
-                <Button
-                    colorScheme="gray"
-                    variant='ghost'
-                    size='sm'
-                    leftIcon={<ThumbsDown size={20} />}
-                >
-                    {[downVotesBy].length}
-                </Button>
-            </HStack>
-            <form>
-                <Flex flexDirection='column' marginTop="5">
-                    <FormLabel>Beri Comment</FormLabel>
-                    <Textarea placeholder="Masukkan komen..." focusBorderColor="black"></Textarea>
-                </Flex>
-                <Flex justifyContent={'end'}>
-                    <Button marginTop={4} colorScheme={btnColor} size={{
-                        base: 'md',
-                        md: 'lg'
-                    }} >Kirim</Button>
-                </Flex>
-            </form>
-        </Box>
+                <HStack marginTop={2} gap={4}>
+                    <Button
+                        colorScheme="gray"
+                        variant='ghost'
+                        size='sm'
+                        leftIcon={<ThumbsUp size={20} />}
+                    >
+                        {[upVotesBy].length}
+                    </Button>
+                    <Button
+                        colorScheme="gray"
+                        variant='ghost'
+                        size='sm'
+                        leftIcon={<ThumbsDown size={20} />}
+                    >
+                        {[downVotesBy].length}
+                    </Button>
+                </HStack>
+                <form>
+                    <Flex flexDirection='column' marginTop="5">
+                        <FormLabel>Beri Comment</FormLabel>
+                        <Textarea placeholder="Masukkan komen..." focusBorderColor="black"></Textarea>
+                    </Flex>
+                    <Flex justifyContent={'end'}>
+                        <Button marginTop={4} colorScheme={btnColor} size={{
+                            base: 'md',
+                            md: 'lg'
+                        }} >Kirim</Button>
+                    </Flex>
+                </form>
+            </Box>
+        </>
     )
 }
 

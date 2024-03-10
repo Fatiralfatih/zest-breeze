@@ -1,16 +1,15 @@
-import Navbar from "../../components/template/Navbar";
-import Footer from "../../components/template/Footer";
+import Navbar from "@components/template/Navbar";
+import { useFetchSingleThread } from "@Features/Hooks/useFetchSingleThread";
 import CardDetailTweet from "./UI/CardDetailTweet";
-import { useFetchSingleThread } from "../../Features/Hooks/useFetchSingleThread";
+
 
 const DetailTweet = () => {
-    const { thread } = useFetchSingleThread();
-    
+    const { thread, isLoading } = useFetchSingleThread();
+
     return (
         <>
             <Navbar />
-            <CardDetailTweet thread={thread} />
-            <Footer />
+            <CardDetailTweet thread={thread} isLoading={isLoading} />
         </>
     )
 }

@@ -1,11 +1,13 @@
 import { Container, Flex } from "@chakra-ui/react"
 import ListTweets from "./UI/ListTweets"
-import useFetchThreads from "../../../Features/Hooks/useFetchThreads"
 import CategoryTweets from "./UI/CategoryTweets";
-import CategoryTweetsMobile from "./UI/CategoryTweetsMobile";
+import useFetchThreads from "@Features/Hooks/useFetchThreads";
+import { useFetchUsers } from "@Features/Hooks/useFetchUsers";
 
 const Tweets = () => {
     const { threads, isLoading } = useFetchThreads();
+
+    const { users } = useFetchUsers();
 
     return (
         <Container maxW={{
@@ -23,18 +25,14 @@ const Tweets = () => {
                 justifyContent="space-between"
                 gap={4}
             >
-                {/**mobile */}
-                <CategoryTweetsMobile threads={threads} isLoading={isLoading} />
-                {/**mobile */}
 
-                <ListTweets threads={threads} isLoading={isLoading} />
+                <ListTweets users={users} threads={threads} isLoading={isLoading} />
 
                 <CategoryTweets threads={threads} isLoading={isLoading} />
             </Flex>
         </Container>
     )
 }
-
 
 
 export default Tweets

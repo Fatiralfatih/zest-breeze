@@ -1,54 +1,19 @@
 import { Box, Button, Flex, Heading, Input, InputGroup, InputRightElement, Stack, Text, VStack, useColorModeValue } from "@chakra-ui/react"
 import { Eye, EyeOff, Rocket } from "lucide-react"
 import { useContext, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import LocaleContext from "../../Features/Contexts/LocaleContext"
 import Navbar from "../../components/template/Navbar"
+import { useRegisterUser } from "@Features/Hooks/useRegister"
 
 const Register = () => {
+
+    const { handleFormChange, setEmail, setName, setPassword } = useRegisterUser();
 
     const [showPassword, setShowPassword] = useState(false)
     const textColor = useColorModeValue('black', 'white')
 
     const { locale } = useContext(LocaleContext)
-
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-
-    const navigate = useNavigate();
-
-    const fetchRegisteredUser = async ({ email, name, password }) => {
-        const response = await fetch('https://forum-api.dicoding.dev/v1/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password })
-        })
-        const responseJson = await response.json();
-        if (responseJson.status !== 'success') {
-            alert(responseJson.message)
-            return { error: true }
-        }
-
-        return { error: false };
-    }
-
-    const handleFormChange = async (event) => {
-        event.preventDefault();
-        const { error } = await fetchRegisteredUser({
-            name,
-            email,
-            password,
-        });
-
-        if (!error) {
-            navigate('/*')
-        }
-    }
-
-
 
     return (
         <>

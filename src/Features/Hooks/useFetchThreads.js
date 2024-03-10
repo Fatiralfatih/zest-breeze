@@ -1,5 +1,5 @@
+import { getAllThreads } from "@utils/api";
 import { useEffect, useState } from "react";
-import { getAllThreads } from "../../utils/api";
 
 const useFetchThreads = () => {
     const [threads, setThreads] = useState([]);
@@ -7,9 +7,11 @@ const useFetchThreads = () => {
 
     useEffect(() => {
         async function fetchThreads() {
+            // setTimeout(async () => {
             const { data } = await getAllThreads();
             setThreads(data)
             setIsLoading(false)
+            // }, 1000);
         }
 
         fetchThreads();

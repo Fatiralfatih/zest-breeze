@@ -3,9 +3,7 @@ import { ThumbsDown, ThumbsUp } from "lucide-react"
 import { any } from "prop-types"
 import { getDateHumans, removeElementHtml } from "../../../utils"
 
-const CardComents = ({ thread }) => {
-
-    const { comments } = thread
+const CardComents = ({ comments }) => {
 
     return (
         <Box padding={{
@@ -20,7 +18,7 @@ const CardComents = ({ thread }) => {
                             <Avatar name={comment.owner.name} size={'sm'} src={comment.owner.avatar} />
                             <Text fontWeight={'bold'}>{comment.owner.name}</Text>
                         </HStack>
-                        <Text fontWeight={400}>{removeElementHtml(comment.content)}</Text>
+                        <Text fontWeight={400} maxW={'md'}>{removeElementHtml(comment.content)}</Text>
                         <HStack>
                             <Button
                                 leftIcon={<ThumbsUp />}
@@ -47,7 +45,7 @@ const CardComents = ({ thread }) => {
 }
 
 CardComents.propTypes = {
-    thread: any
+    comments: any
 }
 
 export default CardComents

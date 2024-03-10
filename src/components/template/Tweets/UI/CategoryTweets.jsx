@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, HStack, Heading, VStack } from '@chakra-ui/react'
+import { Box, Button, Card, CardBody, Flex, Grid, Heading, Spinner } from '@chakra-ui/react'
 import { array, bool } from 'prop-types'
 
 const CategoryTweets = ({ threads, isLoading }) => {
@@ -17,23 +17,30 @@ const CategoryTweets = ({ threads, isLoading }) => {
                 }}
             >
                 <CardBody>
-                    <VStack alignItems={'start'} gap={3} w={'200px'}>
+                    <Flex flexDirection={'row'} wrap={'wrap'} alignItems={'start'} gap={3} w={'100%'}>
                         <Heading size={{
                             md: 'md',
                         }}>All Category</Heading>
-                        {isLoading ? (<p>Sedang loading</p>) : (
-                            <HStack maxW="xl" flexWrap="wrap" gap="2">
+                        {isLoading ? (<Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='md'
+                        />) : (
+                            <Grid templateColumns='repeat(2, 1fr)' gap="4" w={'100%'}  >
                                 {threads.map((thread) => (
                                     <Button
                                         key={thread.id}
                                         variant={'ghost'}
+                                        size={'sm'}
                                     >
                                         #{thread.category}
                                     </Button>
                                 ))}
-                            </HStack>
+                            </Grid>
                         )}
-                    </VStack>
+                    </Flex>
                 </CardBody>
             </Card>
         </Box>

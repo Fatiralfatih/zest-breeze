@@ -1,10 +1,12 @@
-import { Card, Flex } from "@chakra-ui/react";
-import { any } from "prop-types";
+import { Card, Flex, } from "@chakra-ui/react";
+import { any, bool } from "prop-types";
 import CardComents from "./CardComents";
 import CardBodyTweet from "./CardBodyTweet";
+import SpinnerLoading from "@components/shared/UI/SpinnerLoading";
 
-const CardDetailTweet = ({ thread }) => {
+const CardDetailTweet = ({ thread, isLoading }) => {
 
+    const { comments } = thread;
     return (
         <Flex flexDirection={'column'} alignItems={'center'} paddingBlock={100} paddingInline={2}>
             <Card
@@ -14,8 +16,12 @@ const CardDetailTweet = ({ thread }) => {
                     md: '2xl',
                 }}
             >
-                <CardBodyTweet {...thread} />
-                <CardComents thread={thread} />
+                {isLoading ? (<SpinnerLoading />) : (
+                    <>
+                        <CardBodyTweet {...thread} isLoading={isLoading} />
+                        <CardComents comments={comments} />
+                    </>
+                )}
             </Card>
         </Flex>
     )
@@ -23,6 +29,7 @@ const CardDetailTweet = ({ thread }) => {
 
 CardDetailTweet.propTypes = {
     thread: any,
+    isLoading: bool,
 }
 
 export default CardDetailTweet

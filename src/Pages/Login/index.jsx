@@ -1,11 +1,11 @@
 import LocaleContext from "@Features/Contexts/LocaleContext"
 import { Box, Button, Flex, Heading, Text, VStack, useColorModeValue } from "@chakra-ui/react"
-import { login } from "@utils/api"
 import { Rocket } from "lucide-react"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import LoginInput from "./LoginInput"
 import { func } from "prop-types"
+import { fetchUserLogin } from "@utils/api"
 
 const Login = ({ loginSuccess }) => {
 
@@ -13,7 +13,7 @@ const Login = ({ loginSuccess }) => {
     const textColor = useColorModeValue('black', 'white')
 
     const onLogin = async ({ email, password }) => {
-        const { data } = await login({ email, password });
+        const { data } = await fetchUserLogin({ email, password });
         loginSuccess(data);
     }
 

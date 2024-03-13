@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useAddThread = ({ onAddThread }) => {
+const useAddInputThread = ({ onAddThread }) => {
     const [input, setInput] = useState({
         title: '',
         body: '',
@@ -46,4 +46,4 @@ const useAddThread = ({ onAddThread }) => {
     return { input, handleSubmit, handleTitleChange, handleBodyChange, handleCategoryChange }
 }
 
-export default useAddThread
+export default useAddInputThread

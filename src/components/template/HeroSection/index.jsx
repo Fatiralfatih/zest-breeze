@@ -27,7 +27,7 @@ const HeroSection = () => {
                             lg: '35px'
                         }}
                     >
-                        the tweet breeze
+                        the threads breeze
                     </Heading>
                     <Heading
                         fontSize={{

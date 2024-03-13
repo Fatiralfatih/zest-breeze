@@ -14,7 +14,7 @@ async function fetchWithToken(url, options = {}) {
         headers: {
             ...options.headers,
             Authorization: `Bearer ${getAccessToken()}`
-        }
+        },
     });
 }
 
@@ -86,7 +86,7 @@ const getAllThreads = async () => {
     return { error: false, data: responseJson.data.threads };
 }
 
-const getThreadsById = async (id) => {
+const getThreadsById = async ({ id }) => {
     const response = await fetch(`${BASE_URL}/threads/${id}`);
     const responseJson = await response.json();
 
@@ -96,7 +96,6 @@ const getThreadsById = async (id) => {
 
     return { error: false, data: responseJson.data.detailThread }
 }
-
 
 const fetchCreateThread = async ({ title, body, category }) => {
     const response = await fetchWithToken(`${BASE_URL}/threads`, {
@@ -116,6 +115,142 @@ const fetchCreateThread = async ({ title, body, category }) => {
     return { error: false, data: responseJson.data.thread }
 }
 
+const fetchCreateComent = async ({ id, content }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+    })
+
+    const responseJson = await response.json();
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message);
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.comment };
+}
+
+const fetchUpVoteThread = async ({ id }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${id}/up-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.vote }
+}
+
+const fetchDownVoteThread = async ({ id }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${id}/down-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+const fetchNeutralizeVoteThread = async ({ id }) => {
+
+    const response = await fetchWithToken(`${BASE_URL}/threads/${id}/neutral-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data }
+}
+
+const fetchUpVoteCommentThread = async ({ threadId, commentId }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${threadId}/comments/${commentId}/up-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message);
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.vote }
+}
+
+const fetchDownVoteCommentThread = async ({ threadId, commentId }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${threadId}/comments/${commentId}/down-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message);
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.vote }
+}
+
+const fetchNeutralizeVoteCommentThread = async ({ threadId, commentId }) => {
+    const response = await fetchWithToken(`${BASE_URL}/threads/${threadId}/comments/${commentId}/neutral-vote`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    const responseJson = await response.json();
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message);
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.vote }
+}
+
+const fetchLeaderboards = async () => {
+    const response = await fetch(`${BASE_URL}/leaderboards`)
+    const responseJson = await response.json()
+
+    if (responseJson.status !== 'success') {
+        alert(responseJson.message)
+        return { error: true, data: null }
+    }
+
+    return { error: false, data: responseJson.data.leaderboards };
+}
+
+
 export {
     getAccessToken,
     putAccessToken,
@@ -125,5 +260,13 @@ export {
     fetchUserLogin,
     fetchUserRegistered,
     fetchAllUser,
-    fetchCreateThread
+    fetchCreateThread,
+    fetchCreateComent,
+    fetchUpVoteThread,
+    fetchDownVoteThread,
+    fetchNeutralizeVoteThread,
+    fetchUpVoteCommentThread,
+    fetchDownVoteCommentThread,
+    fetchNeutralizeVoteCommentThread,
+    fetchLeaderboards,
 }

@@ -1,6 +1,6 @@
 import { Flex, HStack, Skeleton, SkeletonCircle, SkeletonText, Stack, VStack } from '@chakra-ui/react'
 
-const SpinnerLoading = () => {
+const SkeletonLoading = () => {
   return (
     <Stack padding={{
       base: 4,
@@ -37,4 +37,4 @@ const SpinnerLoading = () => {
   )
 }
 
-export default SpinnerLoading
+export default SkeletonLoading

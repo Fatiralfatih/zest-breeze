@@ -1,6 +1,8 @@
-import useAddThread from "@Features/Hooks/useAddThread";
+import LocaleContext from "@Features/Contexts/LocaleContext";
+import useAddInputThread from "@Features/Hooks/useAddThread";
 import { Box, Button, FormLabel, Input, Stack, Textarea } from "@chakra-ui/react";
 import { bool, func } from "prop-types";
+import { useContext } from "react";
 
 const InputAddThread = ({ onAddThread, isLoading }) => {
 
@@ -10,18 +12,20 @@ const InputAddThread = ({ onAddThread, isLoading }) => {
         handleBodyChange,
         handleCategoryChange,
         handleTitleChange
-    } = useAddThread({
+    } = useAddInputThread({
         onAddThread,
     })
+
+    const { locale } = useContext(LocaleContext);
 
     return (
         <form onSubmit={handleSubmit}>
             <Stack spacing={5}>
                 <Box>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>{locale === 'id' ? 'Judul' : 'Title'}</FormLabel>
                     <Input
                         name="title"
-                        placeholder="Masukkan Tittle..."
+                        placeholder={locale === 'id' ? "Masukkan Tittle..." : 'Input Title...'}
                         required
                         value={input.title}
                         onChange={handleTitleChange}

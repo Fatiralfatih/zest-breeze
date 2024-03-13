@@ -5,19 +5,16 @@ const useFetchThreads = () => {
     const [threads, setThreads] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    async function fetchThreads() {
+        const { data } = await getAllThreads();
+        setThreads(data)
+        setIsLoading(false)
+    }
     useEffect(() => {
-        async function fetchThreads() {
-            // setTimeout(async () => {
-            const { data } = await getAllThreads();
-            setThreads(data)
-            setIsLoading(false)
-            // }, 1000);
-        }
-
         fetchThreads();
     }, [])
 
-    return { threads, setThreads, isLoading };
+    return { threads, setThreads, isLoading, fetchThreads };
 }
 
 export default useFetchThreads;

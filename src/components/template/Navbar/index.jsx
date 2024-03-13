@@ -9,7 +9,7 @@ const Navbar = ({ authedUser, logout }) => {
     const [activeMenuMobile, setActiveMenuMobile] = useBoolean();
     const { colorMode, toggleColorMode } = useColorMode()
 
-    const bg = useColorModeValue('whiteSmoke', 'black')
+    const bg = useColorModeValue('gray.300', 'black')
     const textColor = useColorModeValue('black', 'whiteSmoke')
     const toggleButtonThemeMode = colorMode === 'light' ? (<Moon size={30} />) : (<Sun size={30} />)
     const toggleMenuMobile = activeMenuMobile ? (<Menu size="35" />) : (<XCircle size="35" />)
@@ -42,9 +42,9 @@ const Navbar = ({ authedUser, logout }) => {
                                     }}
                                     color="gray"
                                     _hover={{ color: textColor }}
-                                >Tweet</Text>
+                                >Threads</Text>
                             </Link>
-                            <Link>
+                            <Link to={'/leaderboards'}>
                                 <Text
                                     fontSize={{
                                         md: '17'

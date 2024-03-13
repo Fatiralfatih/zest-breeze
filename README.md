@@ -1,2 +1,2 @@
-# React + Vite + ChakraUI
+# React + Vite
 
